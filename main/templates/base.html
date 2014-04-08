@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>{% block title %}My amazing site{% endblock %}</title>
 
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
@@ -45,7 +45,7 @@
             <button type="button" class="btn btn-default">Oznacz jako odczytane</button>
 </div>
   </div>
-  <div class="col-md-10">.col-md-1</div>
+  <div class="col-md-10">{% block content %}{% endblock %}</div>
     </div>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
   <div class="container">
