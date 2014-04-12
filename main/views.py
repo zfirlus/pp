@@ -7,3 +7,5 @@ def index(request):
     template = loader.get_template('moderator.html')
     context = RequestContext(request)
     return HttpResponse(template.render(context))
+
+
