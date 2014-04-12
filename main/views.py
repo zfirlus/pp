@@ -8,10 +8,10 @@ from django.db.models import Q, Count
 
 def index(request):
     template = loader.get_template('index.html')
-    context = RequestContext(request)
-    deadline_project_list = Project.objects.order_by('deadline')[:3]
-    popular_project_list = Project.objects.order_by('-visit_counter')[:3]
     now = datetime.now().date()
+    deadline_project_list = Project.objects.filter(deadline__gte=now).order_by('deadline')[:3]
+    popular_project_list = Project.objects.filter(deadline__gte=now).order_by('-visit_counter')[:3]
+                            #wyswietla tylko prjekty niezakonczone, posortowane wzgledem licznika odwiedzin malejąco
     for p in deadline_project_list:
         perc = (p.money_raised / p.funding_goal) * 100
         percentage = int(perc)
