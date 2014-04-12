@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+    Kategorie
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}user.css">
+    <br>
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>Liczba projektów</th>
+        </tr>
+        <tr>
+            <td><a href="">film</a></td>
+            <td>1004</td>
+        </tr>
+        <tr>
+            <td><a href="">muzyka</a></td>
+            <td>322</td>
+        </tr>
+        <tr>
+            <td><a href="">gry</a></td>
+            <td>5542</td>
+        </tr>
+        <tr>
+            <td><a href="">motoryzacja</a></td>
+            <td>0</td>
+        </tr>
+    </table>
+{% endblock %}

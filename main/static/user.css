@@ -1,0 +1,35 @@
+#nav {  
+    position: relative;
+    float: left;
+    margin-left:40px;
+}  
+
+#nav li { 
+    float: left;
+    list-style: none;  
+    border-right:1px solid #afc4cc;
+}  
+
+#nav li a {  
+    color: #0c62ae;
+    position: relative;  
+    z-index: 2;  
+    float: left;
+    font-size: 15px;
+    font-weight:bold;
+    font-family: helvetica, arial, sans-serif;
+    text-decoration: none;
+    padding: 5px 45px;
+}
+ul, li {
+    margin: 0; padding: 0;
+}
+.linkButton {
+    background:none!important;
+    border:none;
+    padding:0!important;
+    border-bottom:1px solid #444;
+}
+td{
+    padding-right: 100px;
+}

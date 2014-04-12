@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+    Projekty
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}user.css">
+    <br>
+    <table>
+        <tr>
+            <th>Tytuł</th>
+            <th>Data dodania</th>
+            <th>Kategoria</th>
+            <th>Autor</th>
+            <th>Do zakończenia</th>
+            <th>Zebrano</th>
+        </tr>
+        <tr>
+            <td><a href="">Projekt 1</a></td>
+            <td>10.11.2014</td>
+            <td>film</td>
+            <td>admin</td>
+            <td>2 dni</td>
+            <td>100/200 zł</td>
+        </tr>
+        <tr>
+            <td><a href="">Projekt 2</a></td>
+            <td>55.11.2014</td>
+            <td>film</td>
+            <td>user4234</td>
+            <td>6 dni</td>
+            <td>1/200 zł</td>
+        </tr>
+        <tr>
+            <td><a href="">Projekt 4</a></td>
+            <td>10.11.3045</td>
+            <td>muzyka</td>
+            <td>modek</td>
+            <td>4 dni</td>
+            <td>510/200 zł</td>
+        </tr>
+        <tr>
+            <td><a href="">Grunwald</a></td>
+            <td>15.07.1410</td>
+            <td>historia</td>
+            <td>jagiello</td>
+            <td>0 dni</td>
+            <td>1000000/200000 zł</td>
+        </tr>
+    </table>
+{% endblock %}
