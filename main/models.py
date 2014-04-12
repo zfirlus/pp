@@ -4,6 +4,8 @@ import datetime
 
 class Category(models.Model):
     name = models.CharField(max_length=80)
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.name
 
 
 class User(models.Model):
@@ -15,6 +17,8 @@ class User(models.Model):
     date_created = models.DateTimeField(
         auto_now_add=True)  #Automatically set the field to now when the object is first created. Useful for creation of timestamps
     last_update = models.DateTimeField(auto_now=True)
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.login
 
 
 class Project(models.Model):
@@ -34,6 +38,8 @@ class Project(models.Model):
     visit_counter = models.IntegerField()
     category = models.ForeignKey(Category)
     user = models.ForeignKey(User)
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.title
 
 
 class Perk(models.Model):
@@ -44,6 +50,8 @@ class Perk(models.Model):
     number_available = models.IntegerField(blank=True)  #blank=True znaczy, ze wartosc moze byc null
     #jesli amount=null, to liczba danej nagrody za wsparcie jest nieograniczona
     project = models.ForeignKey(Project)
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):
@@ -51,6 +59,8 @@ class Comment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     project = models.ForeignKey(Project)
     user = models.ForeignKey(User)
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.content
 
 
 class Message(models.Model):
@@ -59,6 +69,8 @@ class Message(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     user_from = models.ForeignKey(User, related_name='message_user_from')
     user_to = models.ForeignKey(User, related_name='message_user_to')
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.subject
 
 
 class Donation(models.Model):
@@ -67,3 +79,5 @@ class Donation(models.Model):
     project = models.ForeignKey(Project)
     user = models.ForeignKey(User)
     perk = models.ForeignKey(Perk)
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.amount

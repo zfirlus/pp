@@ -9,44 +9,24 @@
     <br>
     <table>
         <tr>
-            <th>Tytuł</th>
-            <th>Data dodania</th>
+            <th>Tytuł <a href="?order_by=-title&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=title&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+            <th>Data dodania <a href="?order_by=-date_created&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=date_created&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
             <th>Kategoria</th>
             <th>Autor</th>
-            <th>Do zakończenia</th>
-            <th>Zebrano</th>
+            <th>Do zakończenia  <a href="?order_by=-deadline&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=deadline&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+            <th>Zebrano <a href="?order_by=-money_raised&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=money_raised&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+            <th>Ocena <a href="?order_by=-rating&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=rating&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
         </tr>
-        <tr>
-            <td><a href="">Projekt 1</a></td>
-            <td>10.11.2014</td>
-            <td>film</td>
-            <td>admin</td>
-            <td>2 dni</td>
-            <td>100/200 zł</td>
-        </tr>
-        <tr>
-            <td><a href="">Projekt 2</a></td>
-            <td>55.11.2014</td>
-            <td>film</td>
-            <td>user4234</td>
-            <td>6 dni</td>
-            <td>1/200 zł</td>
-        </tr>
-        <tr>
-            <td><a href="">Projekt 4</a></td>
-            <td>10.11.3045</td>
-            <td>muzyka</td>
-            <td>modek</td>
-            <td>4 dni</td>
-            <td>510/200 zł</td>
-        </tr>
-        <tr>
-            <td><a href="">Grunwald</a></td>
-            <td>15.07.1410</td>
-            <td>historia</td>
-            <td>jagiello</td>
-            <td>0 dni</td>
-            <td>1000000/200000 zł</td>
-        </tr>
+        {% for project in projects_list %}
+            <tr>
+                <td><a href="">{{ project.title }}</a></td>
+                <td>{{ project.date_created }}</td>
+                <td><a href="{% url 'projects' project.category.id %}">{{ project.category.name }}</a></td>
+                <td>{{ project.user.login }}</td>
+                <td>{{ project.toEnd }} dni</td>
+                <td>{{ project.money_raised }}/{{ project.funding_goal }} zł</td>
+                <td>{{ project.rating }}</td>
+            </tr>
+        {% endfor %}
     </table>
 {% endblock %}
