@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+    Projekty
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}user.css">
+    <br>
+    <table>
+        <tr>
+            <th>Tytuł <a href="?order_by=-title&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=title&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+            <th>Data dodania <a href="?order_by=-date_created&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=date_created&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+            <th>Kategoria</th>
+            <th>Autor</th>
+            <th>Do zakończenia  <a href="?order_by=-deadline&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=deadline&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+            <th>Zebrano <a href="?order_by=-money_raised&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=money_raised&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+            <th>Ocena <a href="?order_by=-rating&key={{ key }}"><img src="{{ STATIC_URL }}downArrow.png" height="10" width="10"/></a> <a href="?order_by=rating&key={{ key }}"><img src="{{ STATIC_URL }}upArrow.png" height="10" width="10"/></a></th>
+        </tr>
+        {% for project in projects_list %}
+            <tr>
+                <td><a href="">{{ project.title }}</a></td>
+                <td>{{ project.date_created }}</td>
+                <td><a href="{% url 'projects' project.category.id %}">{{ project.category.name }}</a></td>
+                <td>{{ project.user.login }}</td>
+                <td>{{ project.toEnd }} dni</td>
+                <td>{{ project.money_raised }}/{{ project.funding_goal }} zł</td>
+                <td>{{ project.rating }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
