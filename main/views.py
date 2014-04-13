@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta
 from django.http import HttpResponse
 from django.template import loader, RequestContext
-from django.template import Context
-from main.models import Category, Project
+from main.models import Category, Project, Comment
 from django.db.models import Q, Count
 
 
@@ -103,3 +102,9 @@ def projects(request, cat_id="0"):
     })
     return HttpResponse(template.render(context))
 
+def project(request, pro_id):
+    template  = loader.get_template('project.html')
+    pro = Project.objects.get(id=int(pro_id))
+    coms = Comment.objects.filter(project=pro).order_by('-date_created')
+    context = RequestContext(request, {'coms' : coms})
+    return HttpResponse(template.render(context))

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+    Projekt
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}user.css">
+<h2>tu wyswietlana bedzie tresc projektu</h2>
+Komentarze:
+{% for com in coms %}
+<div class="panel panel-default">
+  <div class="panel-heading"><b>{{ com.user.login }}</b> napisał/a dnia {{ com.date_created}}</div>
+  <div class="panel-body">
+    {{ com.content }}
+  </div>
+</div>
+{% empty %}
+Nie ma żadnych komentarzy dla tego projektu
+{% endfor %}
+{% endblock %}
