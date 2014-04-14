@@ -15,6 +15,15 @@ class UserRegisterForm(forms.ModelForm):
         }
     confirmpassword=forms.CharField(label='Potwierdz haslo', widget=forms.PasswordInput())
 
+class Signin(forms.Form):
+    class Meta:
+        model=User
+        fields=('login','password')
+        labels={
+            'login': ('Login'),
+            'password': ('Haslo'),
+        }
+
 class ProjectRegisterForm(forms.Form):
     title=forms.CharField(label='Nazwa projektu',widget=forms.TextInput(attrs={'class': 'form-control'}))
     short_description=forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))

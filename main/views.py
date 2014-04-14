@@ -7,6 +7,9 @@ from main.models import Category, Project, Comment
 from django.db.models import Q, Count
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
+from main.models import User
+
 
 def index(request):
     template = loader.get_template('index.html')
@@ -153,12 +156,17 @@ def EditProject(request,project_id):
         return redirect('/' ,request)
     return render_to_response('register.html',context)
 
+
 def Signin(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         login=request.POST.get("login","")
         password=request.POST.get("password","")
-        #kod obslugi logowania
-        # jezeli poprawnie zalogowano powrot na strone glowna
-        return redirect('/')
-    else:
-        return render_to_response('signin.html',RequestContext(request))
+        u = User.objects.get(password='password', login='login')
+        us = User.objects.filter(User=u).order_by(password, login)
+        return login
+        if login != null:
+            return redirect('/')
+        else:
+            return render_to_response('signin.html', RequestContext(request))
+    return render_to_response('signin.html', RequestContext(request))
+
