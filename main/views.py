@@ -156,7 +156,6 @@ def EditProject(request,project_id):
         return redirect('/' ,request)
     return render_to_response('register.html',context)
 
-
 def Signin(request):
     if request.method == 'POST':
         login=request.POST.get("login","")
