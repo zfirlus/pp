@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-
     <title>{% block title %}Krałdfanding{% endblock %}</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
     <link rel="Stylesheet" type="text/css" href="{{ STATIC_URL }}base.css"/>
-
-
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="{{ STATIC_URL }}summernote.min.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}summernote.css"/>
 </head>
 
 
@@ -19,7 +17,7 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container" id="gora" style="width: auto;">
         <div class="col-md-2">
-            <a class="navbar-brand" href="#">Nasza strona</a>
+            <a class="navbar-brand" href="{% url 'index' %}">Nasza strona</a>
         </div>
 
         <div class="col-md-5">
@@ -34,9 +32,9 @@
         <div class="col-md-5">
             <ol class="breadcrumb" style="background-color:#97694F">
                 {% block rejestracja %}
-                <li><a style="color: white" href="#">Rejestracja</a></li>
+                <li><a style="color: white" href="{% url 'register' %}">Rejestracja</a></li>
+                <li><a style="color: white" href="{% url 'signin' %}">Zaloguj sie></a></li>
                 {% endblock %}
-                <li><a style="color: white" href="#">Zaloguj sie></a></li>
                 <li><a style="color: white" href="#">Jestes zalogowany jako:{% block login %}{% endblock %}</a></li>
             </ol>
         </div>
@@ -48,18 +46,14 @@
     <div class="col-md-2">
         <div class="btn-group-vertical">
 
-            <a href="{% url 'projects' %}">
-                <button type="button" class="btn btn-default">Projekty</button>
-            </a><br/>
-            <a href="{% url 'categories' %}">
-                <button type="button" class="btn btn-default">Kategorie</button>
-            </a>
-            <button type="button" class="btn btn-default">Obserwowane</button>
-            <button type="button" class="btn btn-default">Utworz nowy</button>
-            <button type="button" class="btn btn-default" style="font-size: 17px;">Powiadomienia</button>
-            <button type="button" class="btn btn-default">Oznacz jako odczytane</button>
-            <button type="button" class="btn btn-default" style="font-size: 17px;">Wiadomosci</button>
-            <button type="button" class="btn btn-default">Oznacz jako odczytane</button>
+            <a href="{% url 'projects' %}" class="btn btn-default">Projekty</a>
+            <a href="{% url 'categories' %}" type="button" class="btn btn-default">Kategorie</a>
+            <a href="" type="button" class="btn btn-default" >Obserwowane</a>
+            <a href="{% url 'newproject' %}" type="button" class="btn btn-default">Utworz nowy</a>
+            <a href="" type="button" class="btn btn-default" style="font-size: 17px;">Powiadomienia</a>
+            <a href="" type="button" class="btn btn-default">Oznacz jako odczytane</a>
+            <a href="" type="button" class="btn btn-default" style="font-size: 17px;">Wiadomosci</a>
+            <a href="" type="button" class="btn btn-default">Oznacz jako odczytane</a>
 
         </div>
     </div>

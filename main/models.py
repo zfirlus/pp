@@ -27,15 +27,15 @@ class Project(models.Model):
         max_length=160)  #krotki opis projktu,mozeby byc wyswietlany na st glownej, razem z paskiem postepu itd
     full_description = models.TextField()  #pelny opis projektu
     funding_goal = models.DecimalField(max_digits=8, decimal_places=2)  #ilosc pieniedzy planowanych do zebrania
-    money_raised = models.DecimalField(max_digits=8, decimal_places=2)  #ilosc pieniedzy juz zebranych
+    money_raised = models.DecimalField(default=0, max_digits=8, decimal_places=2)  #ilosc pieniedzy juz zebranych
     deadline = models.DateField(default=datetime.date.today)  #data zakonczenia projektu
     date_created = models.DateTimeField(
         auto_now_add=True)  #Automatically set the field to now when the object is first created. Useful for creation of timestamps
     last_update = models.DateTimeField(
         auto_now=True)  #Automatically set the field to now every time the object is saved. Useful for 'last-modified' timestamps
-    rating = models.IntegerField() #ocena projektu
+    rating = models.IntegerField(default=0) #ocena projektu
     ban = models.BooleanField(default=False)
-    visit_counter = models.IntegerField()
+    visit_counter = models.IntegerField(default=0)
     category = models.ForeignKey(Category)
     user = models.ForeignKey(User)
     def __str__(self):  # Python 3: def __str__(self):
