@@ -18,7 +18,5 @@ Komentarze:
 {% empty %}
 Nie ma żadnych komentarzy dla tego projektu
 {% endfor %}
-<form>
-{{ form.as_p }}
-</form>
+<div><a href="{% url 'addcoment' proid %}" class="btn btn-primary" role="button" style="width:100%"><h4>Dodaj komentarz</h4></a></div>
 {% endblock %}

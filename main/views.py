@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+from itertools import combinations
 from main import forms
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import loader, RequestContext
-from main.models import Category, Project, Comment
+from main.models import Category, Project, Comment, User
 from django.db.models import Q, Count
 
 
@@ -108,7 +109,7 @@ def project(request, pro_id):
     template  = loader.get_template('project.html')
     pro = Project.objects.get(id=int(pro_id))
     coms = Comment.objects.filter(project=pro).order_by('-date_created')
-    context = RequestContext(request, {'coms' : coms})
+    context = RequestContext(request, {'coms' : coms, 'proid' : str(pro_id) })
     return HttpResponse(template.render(context))
 
 
@@ -142,6 +143,7 @@ def AddNewProject(request):
             return redirect('/',request)
     else:
      return render_to_response('AddNewProject.html',context)
+
 def EditProject(request,project_id):
     f=forms.ProjectRegisterForm()
     context=RequestContext(request,{'formset': f})
@@ -156,8 +158,21 @@ def Signin(request):
     if request.method=='POST':
         login=request.POST.get("login","")
         password=request.POST.get("password","")
-        #kod obslugi logowania
+        # kod obslugi logowania
         # jezeli poprawnie zalogowano powrot na strone glowna
         return redirect('/')
     else:
         return render_to_response('signin.html',RequestContext(request))
+
+def addcoment(request, pro_id):
+    if request.method=='POST':
+        c = forms.ComentForm(request.POST)
+        coment = Comment()
+        coment.project = Project.objects.get(id=int(pro_id))
+        coment.content = c.data['content']
+        coment.user = User.objects.get(id=1)
+        coment.save()
+        return redirect('/project/' + str(pro_id))
+    else:
+        f=forms.ComentForm
+        return render_to_response('comment.html',RequestContext(request, {'formset' : f}))
