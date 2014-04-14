@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div >
+    <form method="post" action="">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td><label>Login: </label></td>
+                <td><input type="text" name="login"/></td>
+            </tr>
+            <tr>
+                <td><label>Hasło: </label></td>
+                <td><input type="password" name="password"/></td>
+            </tr>
+        </table>
+        <input type="submit" value="Zaloguj">
+        <input type="button" href="\" VALUE="Anuluj">
+    </form>
+</div>
+{% endblock %}

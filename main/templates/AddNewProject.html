@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}
+Nowy Projekt
+{% endblock %}
+{% block content %}
+    <div>
+        <form method="post" action="">
+            {% csrf_token %}
+            <table style="width: 100%">
+                <tr><td style="width: 45%"><label> Nazwa projektu</label>
+
+                <td style="width: 55%">{{ formset.title }}</td>
+                </tr>
+                <tr></tr>
+                <tr><td><label>Krótki opis projektu  </label> </td>
+                <td>{{ formset.short_description }}</td></tr>
+                <tr></tr>
+                <tr><td><label>Kategoria projektu</label></td>
+                <td>{{ formset.category }} </td></tr>
+                <tr></tr>
+                <tr><td><label>Wybierz planowaną kwotę do uzbierania</label>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td></td></tr>
+                <tr><td>{{ formset.funding_goal}}</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="goal">0</label></td></tr>
+            </table>
+            <br>
+            <a>Dodaj progi finansowania</a>
+            <div class="perks">
+            </div>
+            <div>
+               <label>Kwota progu finansowania:</label><br>
+                {{form1.perk_value}}<label id="perkvalue">0</label>
+               <br>
+                <label>Opis progu finansowania:</label>
+                {{form1.perk_description}}
+
+            </div>
+            <label>Pełny opis projektu:</label>
+            {{ formset.description}}
+            <div>
+                <div id="fulldescription"></div>
+            </div>
+            <input onmousedown="a()" type="submit" class="btn btn-default" value="Zatwierdź">
+            <input type="reset" class="btn btn-default" value="Anuluj">
+        </form>
+    </div>
+    <script type="text/javascript">
+    var a=function(){ $('#id_project-description').val($('#fulldescription').code()) };
+    $(document).ready(function() {
+          $('#fulldescription').summernote({
+              onImageUpload: a(),
+              onfocus: a(),
+              onblur: a()
+          });
+    });
+    var valuechange=function(){$('#goal').html($('#id_project-funding_goal').val());}
+    var perkvaluechange=function(){$('#perkvalue').html($('#id_perk-perk_value').val());};
+    </script>
+{% endblock %}

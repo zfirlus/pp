@@ -6,7 +6,7 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    url(r'^$', include('main.urls')),
+    url(r'^$', 'main.views.index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^adminUsers/', views.adminUsers, name='adminUsers'),
     url(r'^adminCategories/', views.adminCategories, name='adminCategories'),
@@ -15,4 +15,8 @@ urlpatterns = patterns('',
     url(r'^(?P<cat_id>\d+)/projects/', views.projects, name='projects'),
     url(r'^projects/', views.projects, name='projects'),
     url(r'^project/(?P<pro_id>\d+)/', views.project, name='project'),
+    url(r'^rejestracja/$',views.UserRegister, name='register'),
+    url(r'^nowyprojekt/$',views.AddNewProject, name='newproject'),
+    url(r'^edytujprojekt/(?P<project_id>\d+)/$',views.EditProject, name='editproject'),
+    url(r'^logowanie/$', views.Signin, name='signin'),
 )

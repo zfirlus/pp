@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
+from main import forms
 from django.http import HttpResponse
+from django.shortcuts import render_to_response, redirect
 from django.template import loader, RequestContext
 from main.models import Category, Project, Comment
 from django.db.models import Q, Count
@@ -108,3 +110,54 @@ def project(request, pro_id):
     coms = Comment.objects.filter(project=pro).order_by('-date_created')
     context = RequestContext(request, {'coms' : coms})
     return HttpResponse(template.render(context))
+
+
+def UserRegister(request):
+    f=forms.UserRegisterForm()
+    context=RequestContext(request,{'formset': f})
+    if request.method=='POST':
+        f = forms.UserRegisterForm(request.POST)
+        if f.is_valid():
+            f.save()
+        return redirect('/' ,request)
+    else:
+     return render_to_response('register.html',context)
+
+def AddNewProject(request):
+    f=forms.ProjectRegisterForm(prefix='project')
+    fr=forms.ProjectPerks(prefix='perk')
+    context=RequestContext(request,{'formset': f,'form1':fr})
+    if request.method=='POST':
+        f = forms.ProjectRegisterForm(request.POST,prefix='project')
+        fr=forms.ProjectPerks(request.POST,prefix='perk')
+        if f.is_valid():
+            p=Project()
+            p.title = f.cleaned_data['title']
+            p.short_description=f.cleaned_data['short_description']
+            p.funding_goal=f.cleaned_data['funding_goal']
+            p.full_description=f.cleaned_data['description']
+            p.category=f.cleaned_data['category']
+            p.user_id=1
+            Project.save(p)
+            return redirect('/',request)
+    else:
+     return render_to_response('AddNewProject.html',context)
+def EditProject(request,project_id):
+    f=forms.ProjectRegisterForm()
+    context=RequestContext(request,{'formset': f})
+    if request.method=='POST':
+        f = forms.ProjectRegisterForm(request.POST)
+        if f.is_valid():
+            f.save()
+        return redirect('/' ,request)
+    return render_to_response('register.html',context)
+
+def Signin(request):
+    if request.method=='POST':
+        login=request.POST.get("login","")
+        password=request.POST.get("password","")
+        #kod obslugi logowania
+        # jezeli poprawnie zalogowano powrot na strone glowna
+        return redirect('/')
+    else:
+        return render_to_response('signin.html',RequestContext(request))
