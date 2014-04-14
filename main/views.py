@@ -6,7 +6,8 @@ from django.shortcuts import render_to_response, redirect
 from django.template import loader, RequestContext
 from main.models import Category, Project, Comment, User
 from django.db.models import Q, Count
-
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 def index(request):
     template = loader.get_template('index.html')
