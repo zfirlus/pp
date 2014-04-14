@@ -37,7 +37,7 @@
             <ol class="breadcrumb" style="background-color:#97694F">
                 {% block rejestracja %}
                 <li><a style="color: white" href="{% url 'register' %}">Rejestracja</a></li>
-                <li><a style="color: white" href="{% url 'signin' %}">Zaloguj sie></a></li>
+                <li><a style="color: white" href="{% url 'signin' %}">Zaloguj się</a></li>
                 {% endblock %}
                 <li><a style="color: white" href="#">Jestes zalogowany jako:{% block login %}{% endblock %}</a></li>
             </ol>
@@ -50,14 +50,14 @@
     <div class="col-md-2">
         <div class="btn-group-vertical">
 
-            <a href="{% url 'projects' %}" class="btn btn-default">Projekty</a>
-            <a href="{% url 'categories' %}" type="button" class="btn btn-default">Kategorie</a>
-            <a href="" type="button" class="btn btn-default" >Obserwowane</a>
-            <a href="{% url 'newproject' %}" type="button" class="btn btn-default">Utworz nowy</a>
-            <a href="" type="button" class="btn btn-default" style="font-size: 17px;">Powiadomienia</a>
-            <a href="" type="button" class="btn btn-default">Oznacz jako odczytane</a>
-            <a href="" type="button" class="btn btn-default" style="font-size: 17px;">Wiadomosci</a>
-            <a href="" type="button" class="btn btn-default">Oznacz jako odczytane</a>
+           <a href="{% url 'projects' %}" class=" btn btn-primary btn-lg active" role="button" style="font-size: 17px;">Projekty</button></a>
+  <a href="{% url 'categories' %}" class=" btn btn-info btn-lg active" role="button" style="font-size: 14px;">Kategorie</button></a>
+  <a href="{% url 'categories' %}" class=" btn btn-info btn-lg active" role="button" style="font-size: 14px;">Obserwowne</button></a>
+  <a href="{% url 'categories' %}" class=" btn btn-info btn-lg active" role="button" style="font-size: 14px;">Utwórz nowy</button></a>
+  <a href="{% url 'categories' %}" class=" btn btn-info btn-lg active" role="button" style="font-size: 17px;">Powiadomienia</button></a>
+  <a href="{% url 'categories' %}" class=" btn btn-info btn-lg active" role="button" style="font-size: 14px;">Oznacz jako odczytane</button></a>
+  <a href="{% url 'categories' %}" class=" btn btn-info btn-lg active" role="button" style="font-size: 17px;">Wiadomosci</button></a>
+  <a href="{% url 'categories' %}" class=" btn btn-info btn-lg active" role="button" style="font-size: 14px;">Oznacz jako odczytane</button></a>
 
         </div>
     </div>

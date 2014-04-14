@@ -6,7 +6,8 @@ from django.shortcuts import render_to_response, redirect
 from django.template import loader, RequestContext
 from main.models import Category, Project, Comment, User
 from django.db.models import Q, Count
-
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 def index(request):
     template = loader.get_template('index.html')
@@ -164,7 +165,6 @@ def EditProject(request, project_id):
         return redirect('/', request)
     return render_to_response('register.html', context)
 
-
 def Signin(request):
     if request.method == 'POST':
         c = forms.Signin(request.POST)
@@ -172,6 +172,12 @@ def Signin(request):
             us = User.objects.get(login=c.data['login'],password=c.data['password'])
         except:
             return redirect('/logowanie')
+        login = request.POST['login']
+        if not isinstance(request.session.get('user'), list):
+            request.session['user'] = []
+
+        request.session['user'].append(login)
+        request.session.modified = True
         return redirect('/')
     else:
         f = forms.Signin
