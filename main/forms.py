@@ -13,7 +13,7 @@ class UserRegisterForm(forms.ModelForm):
         widgets={
             'password': forms.PasswordInput()
         }
-    confirmpassword=forms.CharField(label='Nazwa projektu', widget=forms.PasswordInput())
+    confirmpassword=forms.CharField(label='Potwierdz haslo', widget=forms.PasswordInput())
 
 class ProjectRegisterForm(forms.Form):
     title=forms.CharField(label='Nazwa projektu',widget=forms.TextInput(attrs={'class': 'form-control'}))

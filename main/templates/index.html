@@ -21,7 +21,7 @@
         <p> </p>
         <div align="center">
 		    <a href="#" class="btn btn-primary" role="button" style="width:40%"><h4>Więcej o tym, jak to działa</h4></a>
-			<a href="#" class="btn btn-primary" role="button" style="width:40%"><h4>Nowy projekt</h4></a>
+			<a href="{% url 'newproject' %}" class="btn btn-primary" role="button" style="width:40%"><h4>Nowy projekt</h4></a>
         </div>
 
 	</div>
@@ -91,7 +91,7 @@
     </div>
 </div>
 
-<div><a href="#" class="btn btn-primary" role="button" style="width:100%"><h4>Przeglądaj wszytskie projekty</h4></a></div>
+<div><a href="{% url 'projects' %}" class="btn btn-primary" role="button" style="width:100%"><h4>Przeglądaj wszytskie projekty</h4></a></div>
 
 
 {% endblock %}
