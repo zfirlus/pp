@@ -172,6 +172,12 @@ def Signin(request):
             us = User.objects.get(login=c.data['login'],password=c.data['password'])
         except:
             return redirect('/logowanie')
+        login = request.POST['login']
+        if not isinstance(request.session.get('user'), list):
+            request.session['user'] = []
+
+        request.session['user'].append(login)
+        request.session.modified = True
         return redirect('/')
     else:
         f = forms.Signin
