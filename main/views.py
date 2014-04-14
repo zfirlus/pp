@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.db.utils import ConnectionDoesNotExist
 from main import forms
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
@@ -166,13 +167,15 @@ def EditProject(request, project_id):
 
 def Signin(request):
     if request.method == 'POST':
-        login = request.POST.get("login", "")
-        password = request.POST.get("password", "")
-        # kod obslugi logowania
-        # jezeli poprawnie zalogowano powrot na strone glowna
+        c = forms.Signin(request.POST)
+        try:
+            us = User.objects.get(login=c.data['login'],password=c.data['password'])
+        except:
+            return redirect('/logowanie')
         return redirect('/')
     else:
-        return render_to_response('signin.html', RequestContext(request))
+        f = forms.Signin
+        return render_to_response('signin.html', RequestContext(request, {'formset': f}))
 
 
 def addcoment(request, pro_id):

@@ -31,3 +31,8 @@ class ComentForm(forms.ModelForm):
         model = Comment
         fields = ('content',)
 
+class Signin(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=('login','password',)
+
