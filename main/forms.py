@@ -36,3 +36,7 @@ class Signin(forms.ModelForm):
         model=User
         fields=('login','password',)
 
+class MessageForm(forms.Form):
+    subject = forms.CharField(label='Tytuł', max_length=80, widget=forms.TextInput(attrs={'size': '80'}))
+    user_to = forms.CharField(label='Odbiorca', max_length=50, widget=forms.TextInput(attrs={'size': '80'}))
+    content = forms.CharField(label='Treść', widget=forms.Textarea(attrs={'cols' : '80'}))

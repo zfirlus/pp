@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+    Odebrane wiadomości
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}user.css">
+    <br>
+    <table>
+        <tr>
+            <th>Tytuł</th>
+            <th>Data wysłania</th>
+            <th>Nadawca</th>
+        </tr>
+        {% for message in messages_list %}
+            <tr>
+                <td><a href="{% url 'message' message.id %}">{{ message.subject }}</a></td>
+                <td>{{ message.date_created }}</td>
+                <td><a href="">{{ message.user_from.login }}</a></td>
+                <td><a href="?id={{ message.id }}">Usuń</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
