@@ -1,9 +1,25 @@
 <!DOCTYPE html>
+
 {% extends "base.html" %}
 {% block title %}
     Portal crowdfundingowy
 {% endblock %}
 
 {% block content %}
+<div class="container" >
+        <div class="col-md-8">
+         <label>Całkowita kwota wsparcia wynosić będzie:</label>
+         <input type="text" class="form-control" placeholder="Kwota">
+         <a href="#" class="btn btn-primary btn-sm" role="button">Wspieram ten projekt</a>
+             {% for perk in perk_list %}
+              <p>{{ perk.amount }}</p>
+              <p>{{ perk.title }}</p>
+              <p>{{ perk.description }}</p>
+             {% endfor %}
+
+         </div>
+     <div class="col-md-4">
+     </div>
+</div>
 
 {% endblock %}

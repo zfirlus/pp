@@ -8,6 +8,8 @@ from main.models import Category, Project, Comment, User
 from django.db.models import Q, Count
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login
+from django.core.exceptions import ObjectDoesNotExist
 
 def index(request):
     template = loader.get_template('index.html')
@@ -128,8 +130,20 @@ def UserRegister(request):
     if request.method == 'POST':
         f = forms.UserRegisterForm(request.POST)
         if f.is_valid():
-            f.save()
-        return redirect('/', request)
+            login = f.cleaned_data.get("login")
+            email=f.cleaned_data.get("email")
+            password = f.cleaned_data.get("password")
+            confirmpassword=f.cleaned_data.get("confirmpassword")
+            if password == confirmpassword:
+                try:
+                    us = User.objects.get(login=f.data['login'])
+                except:
+                    f.save()
+                    return redirect('/', request)
+                return redirect('/rejestracja')
+                return redirect('/', request)
+            else:
+                return redirect('/rejestracja')
     else:
         return render_to_response('register.html', context)
 
@@ -163,7 +177,8 @@ def EditProject(request, project_id):
         if f.is_valid():
             f.save()
         return redirect('/', request)
-    return render_to_response('register.html', context)
+    return
+
 
 def Signin(request):
     if request.method == 'POST':
@@ -196,3 +211,6 @@ def addcoment(request, pro_id):
     else:
         f = forms.ComentForm
         return render_to_response('comment.html', RequestContext(request, {'formset': f}))
+
+def Support(request):
+    return render_to_response('support.html')
