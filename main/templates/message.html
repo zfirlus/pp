@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+    Odebrana wiadomość
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}user.css">
+    <br>
+    <table>
+        <tr>
+            <td>Tytuł: </td>
+            <td>{{ message.subject }}</td>
+        </tr>
+        <tr>
+            <td>Data wysłania: </td>
+            <td>{{ message.date_created }}</td>
+        </tr>
+        <tr>
+            <td>Nadawca: </td>
+            <td>{{ message.user_from.login }}</td>
+        </tr>
+    </table>
+     <br>
+    Treść: <br>
+    {{ message.content }} <br>
+{% endblock %}
