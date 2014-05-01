@@ -1,5 +1,9 @@
 from django import forms
-from main.models import User,Comment,Category
+from main.models import User, Comment, Category, User
+from django.core.exceptions import ObjectDoesNotExist
+import re
+from django.core import validators
+
 
 class UserRegisterForm(forms.ModelForm):
     class Meta:
@@ -13,7 +17,10 @@ class UserRegisterForm(forms.ModelForm):
         widgets={
             'password': forms.PasswordInput()
         }
-    confirmpassword=forms.CharField(label='Potwierdz haslo', widget=forms.PasswordInput())
+
+    confirmpassword = forms.CharField(label='Potwierdz haslo', widget=forms.PasswordInput())
+
+
 
 class ProjectRegisterForm(forms.Form):
     title=forms.CharField(label='Nazwa projektu',widget=forms.TextInput(attrs={'class': 'form-control'}))

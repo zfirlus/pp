@@ -10,7 +10,7 @@ class Category(models.Model):
 
 class User(models.Model):
     login = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
     password = models.CharField(max_length=50)
     type = models.IntegerField(default=1)  #type=1 to bedzie uzytkownik zwykly
     ban = models.BooleanField(default=False)
