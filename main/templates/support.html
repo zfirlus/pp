@@ -7,19 +7,30 @@
 
 {% block content %}
 <div class="container" >
-        <div class="col-md-8">
-         <label>Całkowita kwota wsparcia wynosić będzie:</label>
-         <input type="text" class="form-control" placeholder="Kwota">
-         <a href="#" class="btn btn-primary btn-sm" role="button">Wspieram ten projekt</a>
-             {% for perk in perk_list %}
-              <p>{{ perk.amount }}</p>
-              <p>{{ perk.title }}</p>
-              <p>{{ perk.description }}</p>
+        <div class="col-md-6">
+            <label>Wpisz kwotę, którą chcesz przeznaczyć na ten projekt. Kwota może być wyższa, niż ta podana w wybranej nagrodzie.</label>
+                <div class="input-append">
+                    <form class="form-horizontal"  action="{% url 'projects' %}">
+                    Całkowita kwota wsparcia wynosić będzie: <input class="span2" style="width:100px;" id="appendedInputButton" type="text">PL
+                    </br>
+                    <a href="#" class="btn btn-primary btn-sm" role="button">Wspieram ten projekt</a>
+                    </form>
+                </div>
+            </br>
+        <p style="font-size:16px;">Aby zmienić nagrodę, wybierz prezent z poniższej listy:</p>
+            <table class="table table-striped">
+                {% for perk in perk_list %}
+                <tr>
+              <td><a href="{% url 'support'%}"><p style="font-size:16px;">Wesprzyj kwotą {{ perk.amount }} lub więcej</p></a>
+              Otrzymujesz: {{ perk.title }}<br>
+              {{ perk.description }}</td>
+                </tr>
              {% endfor %}
-
+            </table>
          </div>
-     <div class="col-md-4">
+     <div class="col-md-6">
+         Wybrałeś:
+
      </div>
 </div>
-
 {% endblock %}
