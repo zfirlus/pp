@@ -4,12 +4,10 @@ from main import forms
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import loader, RequestContext
-from main.models import Category, Project, Comment, User
+from main.models import Category, Project, Comment, User, Perk, Donation
 from django.db.models import Q, Count
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
-from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.sessions.models import Session
 
 def index(request):
     template = loader.get_template('index.html')
@@ -187,12 +185,7 @@ def Signin(request):
             us = User.objects.get(login=c.data['login'],password=c.data['password'])
         except:
             return redirect('/logowanie')
-        login = request.POST['login']
-        if not isinstance(request.session.get('user'), list):
-            request.session['user'] = []
-
-        request.session['user'].append(login)
-        request.session.modified = True
+        request.session['user'] = us.id
         return redirect('/')
     else:
         f = forms.Signin
@@ -212,5 +205,38 @@ def addcoment(request, pro_id):
         f = forms.ComentForm
         return render_to_response('comment.html', RequestContext(request, {'formset': f}))
 
-def Support(request):
-    return render_to_response('support.html')
+def Support(request,pro_id):
+    template = loader.get_template('support.html')
+    projekt=Project.objects.get(id=int(pro_id))
+
+    perk_list = Perk.objects.filter(project=projekt).order_by('amount')
+    choice_perk_list= Perk.objects.filter(project=projekt).order_by('amount')
+    context = RequestContext(request, {
+            'perk_list': perk_list,
+            'choice_perk_list': choice_perk_list,
+            'proid': str(pro_id)
+            })
+    if request.method == 'POST':
+        f = forms.SupportForm(request.POST)
+        if f.is_valid:
+            if f.data['amount']:
+               user = request.session['user']
+               amount=f.data['amount']
+               for perk in perk_list:
+                    kwota=perk.amount
+                    id = perk.perk_id
+                    donation = Donation()
+                    donation.amount=kwota
+                    donation.date=datetime.now().date()
+                    donation.user_id=user
+                    donation.project_id=projekt
+                    donation.perk_id=id
+                    donation.save(donation)
+               return redirect('/',request)
+            else:
+                return redirect('/wspieranie')
+        else:
+            return redirect('/wspieranie')
+    else:
+        f = forms.SupportForm
+        return render_to_response('support.html', RequestContext(request, {'formset': f}),context)

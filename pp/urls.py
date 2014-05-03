@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^edytujprojekt/(?P<project_id>\d+)/$',views.EditProject, name='editproject'),
     url(r'^addcoment/(?P<pro_id>\d+)/', views.addcoment, name='addcoment'),
     url(r'^logowanie/$', views.Signin, name='signin'),
+    url(r'^wspieranie/(?P<pro_id>\d+)/', views.Support, name='support'),
 )

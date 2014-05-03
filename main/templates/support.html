@@ -10,26 +10,39 @@
         <div class="col-md-6">
             <label>Wpisz kwotę, którą chcesz przeznaczyć na ten projekt. Kwota może być wyższa, niż ta podana w wybranej nagrodzie.</label>
                 <div class="input-append">
-                    <form class="form-horizontal"  action="{% url 'projects' %}">
-                    Całkowita kwota wsparcia wynosić będzie: <input class="span2" style="width:100px;" id="appendedInputButton" type="text">PL
+                    <form method='post' class="form-horizontal"  action="">
+                    {% csrf_token %}
+                    <table>
+                    {{ formset }}
                     </br>
-                    <a href="#" class="btn btn-primary btn-sm" role="button">Wspieram ten projekt</a>
+                    </table>
+                        </br>
+                    <input type="submit" class="btn btn-default" value="Wspieram ten projekt!">
                     </form>
                 </div>
             </br>
-        <p style="font-size:16px;">Aby zmienić nagrodę, wybierz prezent z poniższej listy:</p>
+        <p style="font-size:16px;">Lista nagród, które możesz wybrać:</p>
+
             <table class="table table-striped">
                 {% for perk in perk_list %}
                 <tr>
-              <td><a href="{% url 'support'%}"><p style="font-size:16px;">Wesprzyj kwotą {{ perk.amount }} lub więcej</p></a>
-              Otrzymujesz: {{ perk.title }}<br>
-              {{ perk.description }}</td>
+              <td><label>Wesprzyj kwotą {{ perk.amount }} lub więcej</label>
+                <p style="font-size:16px;">Otrzymujesz:</p>
+                {% for per in choice_perk_list %}
+                    {% if per.amount <= perk.amount %}
+              <p style="font-size: 16px; color:#3299CC;">{{ per.title }}</p>
+              {{ per.description }}</br>
+               {% endif %}
+             {% endfor %}
+              </td>
                 </tr>
              {% endfor %}
             </table>
+
          </div>
+
      <div class="col-md-6">
-         Wybrałeś:
+
 
      </div>
 </div>

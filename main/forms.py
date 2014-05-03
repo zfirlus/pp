@@ -1,5 +1,5 @@
 from django import forms
-from main.models import User, Comment, Category, User
+from main.models import User, Comment, Category, User, Perk
 from django.core.exceptions import ObjectDoesNotExist
 import re
 from django.core import validators
@@ -42,4 +42,12 @@ class Signin(forms.ModelForm):
     class Meta:
         model=User
         fields=('login','password',)
+
+class SupportForm(forms.ModelForm):
+    class Meta:
+        model=Perk
+        fields=('amount',)
+        labels={
+            'amount' :('Kwota')
+        }
 
