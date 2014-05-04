@@ -50,4 +50,4 @@ class SupportForm(forms.ModelForm):
         labels={
             'amount' :('Kwota')
         }
-
+amount=forms.DecimalField(label='Kwota', widget=forms.NumberInput)

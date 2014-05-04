@@ -207,8 +207,7 @@ def addcoment(request, pro_id):
 
 def Support(request,pro_id):
     template = loader.get_template('support.html')
-    projekt=Project.objects.get(id=int(pro_id))
-
+    projekt = Project.objects.get(id=int(pro_id))
     perk_list = Perk.objects.filter(project=projekt).order_by('amount')
     choice_perk_list= Perk.objects.filter(project=projekt).order_by('amount')
     context = RequestContext(request, {
@@ -218,25 +217,25 @@ def Support(request,pro_id):
             })
     if request.method == 'POST':
         f = forms.SupportForm(request.POST)
-        if f.is_valid:
-            if f.data['amount']:
+        if f.data['amount']:
+            if f.is_valid:
+               amount=int(f.data['amount'])
                user = request.session['user']
-               amount=f.data['amount']
                for perk in perk_list:
-                    kwota=perk.amount
-                    id = perk.perk_id
-                    donation = Donation()
-                    donation.amount=kwota
-                    donation.date=datetime.now().date()
-                    donation.user_id=user
-                    donation.project_id=projekt
-                    donation.perk_id=id
-                    donation.save(donation)
-               return redirect('/',request)
-            else:
-                return redirect('/wspieranie')
+                   if perk.amount>=amount:
+                       kwota=perk.amount
+                       id=perk.id
+                       donation = Donation()
+                       donation.amount=kwota
+                       donation.date=datetime.now().date()
+                       donation.user= User.objects.get(id=user)
+                       donation.project=Project.objects.get(id=pro_id)
+                       donation.perk=Perk.objects.get(id=id)
+                       donation.save()
+            return redirect('/',request)
         else:
-            return redirect('/wspieranie')
+            f = forms.SupportForm
+            return render_to_response('support.html', RequestContext(request, {'formset': f}),context)
     else:
         f = forms.SupportForm
         return render_to_response('support.html', RequestContext(request, {'formset': f}),context)
