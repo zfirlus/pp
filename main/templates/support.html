@@ -41,9 +41,21 @@
 
          </div>
 
-     <div class="col-md-6">
-
-
+     <div class="col-md-5">
+     <label>Wybrałeś projekt:</label></br>
+                <div class="thumbnail">
+                    <img src="http://www32.speedyshare.com/9PAy7/download/obrazek300x200.jpg" alt="jakis obrazek">
+                    <div class="caption">
+                        <h3>{{projekt.title}}</h3>
+                        <p>{{projekt.short_description}} </p>
+                        <p><div class="progress progress-striped">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="80" style="width: 30%">
+                        <span class="sr-only">{{projekt.percentage}} Complete (success)</span>
+                        </div>
+                        </div></p>
+                         <p> {{ projekt.toEnd }} dni {{ projekt.percentage}}% ({{projekt.money_raised}}/{{projekt.funding_goal}} zł)</p>
+                    </div>
+                </div>
      </div>
 </div>
 {% endblock %}
