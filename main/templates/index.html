@@ -50,7 +50,7 @@
                         </div>
                         </div></p>
                          <p> {{ project.toEnd }} dni {{ project.percentage}}% ({{project.money_raised}}/{{project.funding_goal}} zł)</p>
-                        <p><a href="{% url 'support' project.id %}" class="btn btn-primary" role="button">Wesprzyj</a></p>
+                         <p><a href="{% url 'support' project.id %}" class="btn btn-primary" role="button">Wesprzyj</a></p>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                         </div>
                         </div></p>
                         <p> {{ project.toEnd }} dni {{ project.percentage}}% ({{project.money_raised}}/{{project.funding_goal}} zł)</p>
-                        <p><a href="#" class="btn btn-primary" role="button">Wesprzyj</a>
+                        <p><a href="{% url 'support' project.id %}" class="btn btn-primary" role="button">Wesprzyj</a>
                     </div>
                 </div>
             </div>
