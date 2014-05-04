@@ -4,7 +4,14 @@
 {% block title %}
     Portal crowdfundingowy
 {% endblock %}
-
+{%if project.user.login%}
+{% block login %}
+   {{projekt.user.login}}
+{% endblock %}
+        {% else %}
+        {% block rejestracja %}
+        {% endblock %}
+ {% endif %}
 {% block content %}
 <div class="container" >
         <div class="col-md-6">

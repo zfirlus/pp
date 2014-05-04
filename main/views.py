@@ -188,7 +188,7 @@ def Signin(request):
         except:
             return redirect('/logowanie')
         request.session['user'] = us.id
-        request.session['type'] = 2
+        request.session['type'] = us.type
         return redirect('/')
     else:
         f = forms.Signin
