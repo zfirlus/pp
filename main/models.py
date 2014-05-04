@@ -10,9 +10,9 @@ class Category(models.Model):
 
 class User(models.Model):
     login = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
     password = models.CharField(max_length=50)
-    type = models.IntegerField(default=1)  #type=1 to bedzie uzytkownik zwykly
+    type = models.IntegerField(default=2)  #type=1 to bedzie uzytkownik zwykly
     ban = models.BooleanField(default=False)
     date_created = models.DateTimeField(
         auto_now_add=True)  #Automatically set the field to now when the object is first created. Useful for creation of timestamps

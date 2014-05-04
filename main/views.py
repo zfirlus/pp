@@ -4,10 +4,12 @@ from main import forms
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import loader, RequestContext
-from main.models import Category, Project, Comment, User, Message
+from main.models import Category, Project, Comment, User, Perk, Donation
 from django.db.models import Q, Count
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib.sessions.models import Session
+import decimal
+from decimal import Decimal
 
 def index(request):
     template = loader.get_template('index.html')
@@ -88,7 +90,6 @@ def categories(request):
     context = RequestContext(request, {
         'cat_list': cat_list,
     })
-    #fdsfsdfsfs
     return HttpResponse(template.render(context))
 
 
@@ -129,8 +130,20 @@ def UserRegister(request):
     if request.method == 'POST':
         f = forms.UserRegisterForm(request.POST)
         if f.is_valid():
-            f.save()
-        return redirect('/', request)
+            login = f.cleaned_data.get("login")
+            email=f.cleaned_data.get("email")
+            password = f.cleaned_data.get("password")
+            confirmpassword=f.cleaned_data.get("confirmpassword")
+            if password == confirmpassword:
+                try:
+                    us = User.objects.get(login=f.data['login'])
+                except:
+                    f.save()
+                    return redirect('/', request)
+                return redirect('/rejestracja')
+                return redirect('/', request)
+            else:
+                return redirect('/rejestracja')
     else:
         return render_to_response('register.html', context)
 
@@ -164,7 +177,8 @@ def EditProject(request, project_id):
         if f.is_valid():
             f.save()
         return redirect('/', request)
-    return render_to_response('register.html', context)
+    return
+
 
 def Signin(request):
     if request.method == 'POST':
@@ -173,12 +187,8 @@ def Signin(request):
             us = User.objects.get(login=c.data['login'],password=c.data['password'])
         except:
             return redirect('/logowanie')
-        login = request.POST['login']
-        if not isinstance(request.session.get('user'), list):
-            request.session['user'] = []
-
-        request.session['user'] = c.data['login']
-        request.session.modified = True
+        request.session['user'] = us.id
+        request.session['type'] = 2
         return redirect('/')
     else:
         f = forms.Signin
@@ -198,66 +208,43 @@ def addcoment(request, pro_id):
         f = forms.ComentForm
         return render_to_response('comment.html', RequestContext(request, {'formset': f}))
 
-def newMessage(request, user_id="0"):
+def Support(request,pro_id):
+    template = loader.get_template('support.html')
+    projekt = Project.objects.get(id=int(pro_id))
+    perk_list = Perk.objects.filter(project=projekt).order_by('amount')
+    zmienna=perk_list[0].amount
+    choice_perk_list=Perk.objects.filter(project=projekt).order_by('amount')
+    context = RequestContext(request, {
+            'perk_list': perk_list,
+            'choice_perk_list': choice_perk_list,
+            'projekt': projekt,
+            'proid': str(pro_id)
+            })
     if request.method == 'POST':
-        f = forms.MessageForm(request.POST)
-        if f.is_valid():
-            message = Message()
-            message.subject = f.cleaned_data['subject']
-            message.content = f.cleaned_data['content']
-            message.date_created = datetime.now()
-            message.user_to = User.objects.get(login=f.cleaned_data['user_to'])
-            try:
-                message.user_from = User.objects.get(login=request.session['user'])
-            except:
-                return redirect('/')
-            message.save()
-        return redirect('/')
+        f = forms.SupportForm(request.POST)
+        if f.data['amount']:
+            if f.is_valid:
+               amount=int(f.data['amount'])
+               user = request.session['user']
+               if amount<zmienna:
+                   f = forms.SupportForm
+                   return render_to_response('support.html', RequestContext(request, {'formset': f}),context)
+               else:
+                   for perk in perk_list:
+                    if perk.amount<=amount:
+                        kwota=perk.amount
+                        id=perk.id
+                        donation = Donation()
+                        donation.amount=decimal.Decimal(f.data['amount'])
+                        donation.date=datetime.now().date()
+                        donation.user= User.objects.get(id=user)
+                        donation.project=Project.objects.get(id=pro_id)
+                        donation.perk=Perk.objects.get(id=id)
+                        donation.save()
+            return redirect('/',request)
+        else:
+            f = forms.SupportForm
+            return render_to_response('support.html', RequestContext(request, {'formset': f}),context)
     else:
-        f = forms.MessageForm
-        userID = int(user_id)
-        if userID > 0:
-            user = User.objects.get(id=userID)
-            f = forms.MessageForm(initial={'user_to' : user.login})
-        return render_to_response('new_message.html', RequestContext(request, {'formset': f}))
-
-def messages(request):
-    try:
-        login = request.session['user']
-        user = User.objects.get(login=login)
-        mes_id = request.GET.get('id', '0')
-        mesID = int(mes_id)
-        if mesID > 0:
-            try:
-                userTo = User.objects.get(login=login)
-                mes = Message.objects.get(Q(id = mesID) & Q(user_to = userTo))
-                mes.delete()
-            except:
-                bla = "bla"
-        messages_list = Message.objects.filter(user_to = user)
-        template = loader.get_template('messages.html')
-        context = RequestContext(request, {
-        'messages_list': messages_list,
-        })
-        return HttpResponse(template.render(context))
-    except:
-        return redirect('/')
-
-def message(request, mes_id="0"):
-    try:
-        login = request.session['user']
-        user = User.objects.get(login=login)
-        mesID = int(mes_id)
-        if mesID > 0:
-            try:
-                userTo = User.objects.get(login=login)
-                mes = Message.objects.get(id = mesID, user_to = userTo)
-                template = loader.get_template('message.html')
-                context = RequestContext(request, {
-                'message': mes,
-                })
-                return HttpResponse(template.render(context))
-            except:
-                return redirect('/')
-    except:
-        return redirect('/')
+        f = forms.SupportForm
+        return render_to_response('support.html', RequestContext(request, {'formset': f}),context)

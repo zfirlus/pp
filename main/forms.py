@@ -1,5 +1,9 @@
 from django import forms
-from main.models import User,Comment,Category
+from main.models import User, Comment, Category, User, Perk
+from django.core.exceptions import ObjectDoesNotExist
+import re
+from django.core import validators
+
 
 class UserRegisterForm(forms.ModelForm):
     class Meta:
@@ -13,7 +17,10 @@ class UserRegisterForm(forms.ModelForm):
         widgets={
             'password': forms.PasswordInput()
         }
-    confirmpassword=forms.CharField(label='Potwierdz haslo', widget=forms.PasswordInput())
+
+    confirmpassword = forms.CharField(label='Potwierdz haslo', widget=forms.PasswordInput())
+
+
 
 class ProjectRegisterForm(forms.Form):
     title=forms.CharField(label='Nazwa projektu',widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -36,7 +43,11 @@ class Signin(forms.ModelForm):
         model=User
         fields=('login','password',)
 
-class MessageForm(forms.Form):
-    subject = forms.CharField(label='Tytuł', max_length=80, widget=forms.TextInput(attrs={'size': '80'}))
-    user_to = forms.CharField(label='Odbiorca', max_length=50, widget=forms.TextInput(attrs={'size': '80'}))
-    content = forms.CharField(label='Treść', widget=forms.Textarea(attrs={'cols' : '80'}))
+class SupportForm(forms.ModelForm):
+    class Meta:
+        model=Perk
+        fields=('amount',)
+        labels={
+            'amount' :('Kwota')
+        }
+amount=forms.DecimalField(label='Kwota', widget=forms.NumberInput)
