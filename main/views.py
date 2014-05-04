@@ -8,6 +8,8 @@ from main.models import Category, Project, Comment, User, Perk, Donation
 from django.db.models import Q, Count
 from django.http import HttpResponseRedirect
 from django.contrib.sessions.models import Session
+import decimal
+from decimal import Decimal
 
 def index(request):
     template = loader.get_template('index.html')
@@ -186,7 +188,7 @@ def Signin(request):
         except:
             return redirect('/logowanie')
         request.session['user'] = us.id
-        request.session['type'] = us.type
+        request.session['type'] = 2
         return redirect('/')
     else:
         f = forms.Signin
@@ -210,7 +212,7 @@ def Support(request,pro_id):
     template = loader.get_template('support.html')
     projekt = Project.objects.get(id=int(pro_id))
     perk_list = Perk.objects.filter(project=projekt).order_by('amount')
-    zmienna=perk_list[0]
+    zmienna=perk_list[0].amount
     choice_perk_list=Perk.objects.filter(project=projekt).order_by('amount')
     context = RequestContext(request, {
             'perk_list': perk_list,
@@ -229,11 +231,11 @@ def Support(request,pro_id):
                    return render_to_response('support.html', RequestContext(request, {'formset': f}),context)
                else:
                    for perk in perk_list:
-                    if perk.amount>=amount:
+                    if perk.amount<=amount:
                         kwota=perk.amount
                         id=perk.id
                         donation = Donation()
-                        donation.amount=kwota
+                        donation.amount=decimal.Decimal(f.data['amount'])
                         donation.date=datetime.now().date()
                         donation.user= User.objects.get(id=user)
                         donation.project=Project.objects.get(id=pro_id)
