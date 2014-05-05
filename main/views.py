@@ -45,6 +45,7 @@ def index(request):
 
 
 def projects(request):
+    request.session['user'] = False
     order_by = request.GET.get('order_by', '-visit_counter')
     key = request.GET.get('key', '')
     projects_list = Project.objects.filter(Q(title__contains=key) | Q(full_description__contains=key)).order_by(
@@ -141,9 +142,9 @@ def UserRegister(request):
                     f.save()
                     return redirect('/', request)
                 return redirect('/rejestracja')
-                return redirect('/', request)
             else:
                 return redirect('/rejestracja')
+            return redirect('/', request)
     else:
         return render_to_response('register.html', context)
 
