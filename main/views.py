@@ -226,7 +226,7 @@ def Support(request,pro_id):
         if f.data['amount']:
             if f.is_valid:
                amount=int(f.data['amount'])
-               user = request.session['user']
+               user = request.session.get['user']
                if amount<zmienna:
                    f = forms.SupportForm
                    return render_to_response('support.html', RequestContext(request, {'formset': f}),context)
